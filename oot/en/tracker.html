@@ -35,7 +35,7 @@ table.t th{background:var(--chip);font-weight:600}.tw{overflow-x:auto}
 .tabs button[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:#fff}
 @media (prefers-color-scheme:dark){.tabs button[aria-selected=true]{color:#10210f}}
 [hidden]{display:none!important}
-.filters{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;margin:6px 0 10px}.filters select{font:inherit;padding:2px 4px}
+.filters{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;margin:6px 0 10px}.filters select{font:inherit;padding:2px 4px}.fkind{display:inline-flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
 .prog{font-size:15px;margin:6px 0}.prog b{font-size:20px}
 .bar{height:8px;background:var(--chip);border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}
 .chk{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:6px 0;cursor:pointer}
@@ -68,7 +68,7 @@ input:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid 
 <div id="hbar" class="hbar" aria-label="Hearts"></div>
 <div class="tabs" role="tablist"><button role="tab" data-t="now" aria-selected="true">Available now</button><button role="tab" data-t="hearts" aria-selected="false">Hearts</button><button role="tab" data-t="gs" aria-selected="false">Gold Skulltulas</button><button role="tab" data-t="chests" aria-selected="false">Chests</button><button role="tab" data-t="events" aria-selected="false">Events</button><button role="tab" data-t="gear" aria-selected="false">Items & songs</button><button role="tab" data-t="walk" aria-selected="false" class="sw2only">攻略・新規追加</button></div>
 <div id="filt" class="filters"><label>Age <select id="fage"><option value="">All</option><option value="子">Child can get</option><option value="大">Adult can get</option></select></label>
-<label><input type="checkbox" id="fnow"> Only what I can get now</label><label><input type="checkbox" id="fleft"> Only unchecked</label></div>
+<label><input type="checkbox" id="fnow"> Only what I can get now</label><label><input type="checkbox" id="fleft"> Only unchecked</label><span id="fkind" class="fkind">Show:<label><input type="checkbox" data-k="h" checked> Hearts</label><label><input type="checkbox" data-k="g" checked> Skulltulas</label><label><input type="checkbox" data-k="x" checked> Chests</label><label><input type="checkbox" data-k="e" checked> Events</label></span></div>
 <div id="prog"></div><div id="view"></div>
 <button class="reset" id="reset">Clear all checks</button>
 <script>
@@ -114,7 +114,7 @@ const rid=(r,pre,i)=>r[5]||pre+i;
 function list(rows,pre){const fa=fage.value,fn=fnow.checked,fl=fleft.checked;let h="";
  D.areas.forEach((a,ai)=>{const items=rows.map((r,i)=>[r,i]).filter(([r,i])=>r[0]===a&&(!fa||r[1]===fa||r[1]==="両")&&(!fn||canLoc(r,rid(r,pre,i))!==false)&&(!fl||!S[rid(r,pre,i)]));
   if(!items.length)return;const all=rows.filter(r=>r[0]===a).length,got=rows.filter((r,i)=>r[0]===a&&S[rid(r,pre,i)]).length;
-  h+=`<h2><a href="${D.areaUrl[ai]}">${esc(D.areaN[ai])}</a> <small>${got}/${all}</small></h2>`+items.map(([r,i])=>row(rid(r,pre,i),r)).join("")});
+  h+=`<h2><a href="${D.areaUrl[ai]}">${esc(D.areaN[ai])}</a> <small>${got}/${all}</small></h2>`+nowMap(a,items.map(([r,i])=>rid(r,pre,i))).replace(T.nmap,document.documentElement.lang==="en"?"Map (markers for this list; faded = checked)":"マップ（この一覧の印を表示。薄い印は取ったもの）")+items.map(([r,i])=>row(rid(r,pre,i),r)).join("")});
  return h||`<p>${T.empty}</p>`}
 const bar=(n,t,l)=>`<p class="prog">${l} <b>${n}</b> / ${t}</p><div class="bar"><i style="width:${100*n/t}%"></i></div>`;
 const HEART="M12 21.3l-1.4-1.3C5.4 15.4 2 12.3 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.8-3.4 6.9-8.6 11.5L12 21.3z";
@@ -140,7 +140,7 @@ function fillMap(d){const a=d.dataset.a,u=d.dataset.u,ids=d.dataset.ids.split(",
  const go=html=>{const doc=new DOMParser().parseFromString(html,"text/html");const figs=[...doc.querySelectorAll("figure.map")];if(!figs.length){fb();return}
   b.innerHTML="";const wraps=[...doc.querySelectorAll(".floors")];const srcs=wraps.length?wraps.concat(figs.filter(f=>!f.closest(".floors"))):figs;
   srcs.forEach(f=>{const c=document.importNode(f,true);c.querySelectorAll("a[href^='#']").forEach(x=>{const tid=x.id?REV[u+"#"+x.id]:null;
-    if(tid&&set.has(tid)){x.setAttribute("href","#nw-"+tid);x.dataset.now="1"}else{x.setAttribute("href",u+x.getAttribute("href"));if(tid)x.style.opacity=".22"}});
+    if(tid&&set.has(tid)){x.setAttribute("href","#nw-"+tid);x.dataset.now="1";if(S[tid])x.style.opacity=".45"}else{x.setAttribute("href",u+x.getAttribute("href"));if(tid)x.style.opacity=".22"}});
     if(c.classList.contains("floors")){const fs=[...c.querySelectorAll("figure.map")];let best=0,bn=-1;fs.forEach((g,k)=>{const n=g.querySelectorAll("a[data-now]").length;if(n>bn){bn=n;best=k}});
       fs.forEach((g,k)=>g.hidden=k!==best);c.querySelectorAll(".flb").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.i===String(best))))}
     b.appendChild(c)})};
@@ -152,7 +152,7 @@ function nowMapSVG(a,ids){const M0=D.nowmap[a];if(M0&&M0.fl&&M0.fl.length>1){con
 function nowMapOne(M,ids){if(!M.r||!M.r.length)return"";const set=new Set(ids);const ms=M.m.filter(m=>m[0]==="start"||set.has(m[0]));
  const xs=[],zs=[];M.r.forEach(([z,a0,a1])=>{xs.push(a0,a1+1);zs.push(z,z+1)});const mx=Math.min(...xs)-2,Mx=Math.max(...xs)+2,mz=Math.min(...zs)-2,Mz=Math.max(...zs)+2;
  const col={h:"#e2546a",g:"#ffd400",x:"#8a5a2e",e:"#4d8fd6"};
- const mk=ms.map(([id,x,z])=>id==="start"?`<path d="M${x} ${z-1.6} L${x+1.4} ${z+1} L${x-1.4} ${z+1}Z" fill="#2f6fb2"/>`:`<a href="#nw-${id}"><circle cx="${x}" cy="${z}" r="1.25" fill="${col[id[0]]||"#888"}" stroke="#222" stroke-width=".25"/></a>`).join("");
+ const mk=ms.map(([id,x,z])=>id==="start"?`<path d="M${x} ${z-1.6} L${x+1.4} ${z+1} L${x-1.4} ${z+1}Z" fill="#2f6fb2"/>`:`<a href="#nw-${id}"${S[id]?' opacity=".4"':""}><circle cx="${x}" cy="${z}" r="1.25" fill="${col[id[0]]||"#888"}" stroke="#222" stroke-width=".25"/></a>`).join("");
  return `<svg viewBox="${mx} ${mz} ${Mx-mx} ${Mz-mz}">${M.r.map(([z,x0,x1,l])=>`<rect x="${x0}" y="${z}" width="${x1-x0+1.02}" height="1.02" class="nl${l}"/>`).join("")}<path d="${(M.w||[]).map(([a,b,c,d])=>`M${a} ${b}L${c} ${d}`).join("")}" class="nw"/>${mk}</svg>`}
 document.addEventListener("toggle",e=>{const d=e.target;if(!d.classList||!d.classList.contains("nmap"))return;const a=d.dataset.a;S._nm=S._nm||{};if(d.open){S._nm[a]=1;fillMap(d)}else delete S._nm[a];save()},true);
 function walkHTML(){let h=`<p class="where">N64版の攻略手順です。Switch 2版で同じかどうかを記録してください（調査ノートと共通）。</p>`;
@@ -162,7 +162,7 @@ function walkHTML(){let h=`<p class="where">N64版の攻略手順です。Switch
  return h}
 function render(){const _rb=document.getElementById("rfbar");if(_rb&&!render._soft)_rb.hidden=true;hbar.innerHTML=hbarHTML();
  const hp=D.hearts.filter((_,i)=>S["h"+i]).length,cp=D.cont.filter((_,i)=>S["c"+i]).length;
- filt.hidden=tab==="gear";document.querySelectorAll("#fnow,#fleft").forEach(x=>x.parentElement.hidden=tab==="now");
+ filt.hidden=tab==="gear";document.querySelectorAll("#fnow,#fleft").forEach(x=>x.parentElement.hidden=tab==="now");fkind.hidden=tab!=="now";fkind.querySelectorAll("input").forEach(x=>x.checked=!(S._kf&&S._kf[x.dataset.k]));
  if(tab==="hearts"){prog.innerHTML=bar(hp,36,T.hp)+`<p class="prog">${T.ht} <b>${3+cp+Math.floor(hp/4)}</b> / 20</p>`;
   view.innerHTML=list(D.hearts,"h")+`<h2>${T.hc} <small>${cp}/8</small></h2>`+D.cont.map((c,i)=>row("c"+i,[c[4],c[1],0,c[3],c[5]])).join("")}
  else if(tab==="gs"){prog.innerHTML=bar(gsCount(),100,T.gsn);view.innerHTML=list(D.gs,"g")}
@@ -173,12 +173,12 @@ function render(){const _rb=document.getElementById("rfbar");if(_rb&&!render._so
   const blocks=[];const O=D.order||{};const ord=id=>O[id]!==undefined?O[id]:999;
   D.areas.forEach((a,ai)=>{const items=[];
    const push=(id,r,k)=>items.push([id,row(id,[...r.slice(0,5),null,k,r[7]]),r[1]]);
-   const okAge=r=>!fa||r[1]===fa||r[1]==="両";
-   D.hearts.forEach((r,i)=>{if(r[0]===a&&!S["h"+i]&&canLoc(r,"h"+i)&&okAge(r))push("h"+i,r,T.kh)});
-   D.gs.forEach((r,i)=>{if(r[0]===a&&!S["g"+i]&&canLoc(r,"g"+i)&&okAge(r))push("g"+i,r,T.kg)});
-   D.chests.forEach(r=>{if(r[0]===a&&!S[r[5]]&&canLoc(r,r[5])&&okAge(r))push(r[5],r,T.kc)});
-   D.cont.forEach((c,i)=>{const r=[c[4],c[1],0,c[3],c[5]];if(r[0]===a&&!S["c"+i]&&canLoc(r,"c"+i)&&okAge(r))items.push(["c"+i,row("c"+i,[...r,null,T.khc]),r[1]])});
-   D.events.forEach(r=>{if(r[0]===a&&!S[r[5]]&&canLoc(r,r[5])&&okAge(r))push(r[5],r,T.ke)});
+   const okAge=r=>!fa||r[1]===fa||r[1]==="両";const KO=S._kf||{};
+   D.hearts.forEach((r,i)=>{if(!KO.h&&r[0]===a&&!S["h"+i]&&canLoc(r,"h"+i)&&okAge(r))push("h"+i,r,T.kh)});
+   D.gs.forEach((r,i)=>{if(!KO.g&&r[0]===a&&!S["g"+i]&&canLoc(r,"g"+i)&&okAge(r))push("g"+i,r,T.kg)});
+   D.chests.forEach(r=>{if(!KO.x&&r[0]===a&&!S[r[5]]&&canLoc(r,r[5])&&okAge(r))push(r[5],r,T.kc)});
+   D.cont.forEach((c,i)=>{const r=[c[4],c[1],0,c[3],c[5]];if(!KO.h&&r[0]===a&&!S["c"+i]&&canLoc(r,"c"+i)&&okAge(r))items.push(["c"+i,row("c"+i,[...r,null,T.khc]),r[1]])});
+   D.events.forEach(r=>{if(!KO.e&&r[0]===a&&!S[r[5]]&&canLoc(r,r[5])&&okAge(r))push(r[5],r,T.ke)});
    if(items.length){items.sort((x,y)=>ord(x[0])-ord(y[0]));
     if(a==="魂の神殿"||a==="Spirit Temple"){const kid=items.filter(x=>x[2]!=="大"),adl=items.filter(x=>x[2]==="大");
      if(kid.length)blocks.push([Math.min(...kid.map(x=>ord(x[0]))),ai,a,kid,T.kidpart]);if(adl.length)blocks.push([Math.min(...adl.map(x=>ord(x[0]))),ai,a,adl,T.adlpart])}
@@ -206,7 +206,7 @@ view.addEventListener("change",e=>{const id=e.target.dataset.id;if(!id)return;se
 prog.addEventListener("click",e=>{if(e.target.id==="undo"&&last){setId(last,false);last=null;save();render()}});
 if(MODE!=="sw2")document.querySelectorAll(".sw2only").forEach(x=>x.remove());
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));render()});
-[fage,fnow,fleft].forEach(x=>x.onchange=render);
+[fage,fnow,fleft].forEach(x=>x.onchange=render);fkind.querySelectorAll("input").forEach(x=>x.onchange=()=>{S._kf=S._kf||{};if(x.checked)delete S._kf[x.dataset.k];else S._kf[x.dataset.k]=1;save();render()});
 reset.onclick=()=>{if(confirm(T.conf)){S={};save();render()}};
 render();
 </script>
