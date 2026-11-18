@@ -141,7 +141,6 @@
   <url><loc>https://makyabity-cmd.github.io/oot/tracker.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/oot/versions.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://makyabity-cmd.github.io/tww/about.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/charts.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/dungeons/drc.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/dungeons/et.html</loc><lastmod>2026-11-11</lastmod></url>
@@ -155,7 +154,6 @@
   <url><loc>https://makyabity-cmd.github.io/tww/dungeons/tog.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/dungeons/wt.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://makyabity-cmd.github.io/tww/en/about.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/charts.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/dungeons/drc.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/dungeons/et.html</loc><lastmod>2026-11-11</lastmod></url>
@@ -171,7 +169,6 @@
   <url><loc>https://makyabity-cmd.github.io/tww/en/figurines.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/hearts.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/items.html</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://makyabity-cmd.github.io/tww/en/privacy.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/sidequests/cave.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/sidequests/chest.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/en/sidequests/index.html</loc><lastmod>2026-11-11</lastmod></url>
@@ -255,7 +252,6 @@
   <url><loc>https://makyabity-cmd.github.io/tww/islands/g7.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/islands/index.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/items.html</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://makyabity-cmd.github.io/tww/privacy.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/tracker.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/tww/triforce.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/oot/switch2.html</loc><lastmod>2026-11-17</lastmod></url>
@@ -268,4 +264,10 @@
   <url><loc>https://makyabity-cmd.github.io/oot/en/sw2-hearts.html</loc><lastmod>2026-11-17</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/oot/en/sw2-skulltulas.html</loc><lastmod>2026-11-17</lastmod></url>
   <url><loc>https://makyabity-cmd.github.io/oot/en/sw2-maps.html</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://makyabity-cmd.github.io/about.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://makyabity-cmd.github.io/privacy.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://makyabity-cmd.github.io/contact.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://makyabity-cmd.github.io/en/about.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://makyabity-cmd.github.io/en/privacy.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://makyabity-cmd.github.io/en/contact.html</loc><lastmod>2026-11-18</lastmod></url>
 </urlset>
